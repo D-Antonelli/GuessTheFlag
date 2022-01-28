@@ -12,8 +12,8 @@ struct ContentView: View {
     @State private var scoreTitle = ""
     @State private var score = 0
     @State private var gameOver = false
-    @State private var numberOfQuestions = 3
-    @State private var numberOfQuestionsAsked = 3
+    @State private var totalNumberOfQuestions = 8
+    @State private var numberOfQuestionsAsked = 0
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
@@ -70,12 +70,13 @@ struct ContentView: View {
         }
         
         .alert(scoreTitle, isPresented: $gameOver) {
-            Button("Restart", action: askQuestion)
+            Button("Restart", action: resetGame)
         } message: {
             Text("Your total score is \(score)")
         }
 
     }
+    
     func flagTapped(_ number: Int) {
         if(number == correctAnswer) {
             scoreTitle = "Correct"
@@ -84,12 +85,11 @@ struct ContentView: View {
             scoreTitle = "Dang! That's the flag of \(countries[number])"
         }
         
-        numberOfQuestionsAsked -= 1
+        numberOfQuestionsAsked += 1
         
-        if(numberOfQuestionsAsked < 1 ) {
+        if(numberOfQuestionsAsked == totalNumberOfQuestions ) {
             gameOver = true
             scoreTitle = "Game Over"
-            numberOfQuestionsAsked = numberOfQuestions
         }
         else {
             showingScore = true
@@ -98,11 +98,14 @@ struct ContentView: View {
     
     
     func askQuestion() {
-        if(numberOfQuestionsAsked == numberOfQuestions) {
-            score = 0
-        }
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+    }
+    
+    func resetGame() {
+        numberOfQuestionsAsked = 0
+        score = 0
+        askQuestion()
     }
     
 }
