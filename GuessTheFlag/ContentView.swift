@@ -42,7 +42,10 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     
+    @State private var rotationAmount = 0.0
+    
     var body: some View {
+        
         ZStack {
             RadialGradient(stops: [.init(color: Color(red: 0.1, green: 0.2, blue: 0.3), location: 0.3), .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3)], center: .top, startRadius: 200, endRadius: 700).ignoresSafeArea()
             VStack {
@@ -60,10 +63,13 @@ struct ContentView: View {
                         }
                         ForEach(0..<3) { number in
                             Button {
+                                rotationAmount += 360
                                 flagTapped(number)
                             } label: {
                                 FlagImage(image: Image(countries[number]))
                             }
+                            .rotation3DEffect(.degrees(rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
+                            .animation(.default, value: rotationAmount)
                         }
                     
                 }
@@ -95,6 +101,7 @@ struct ContentView: View {
         } message: {
             Text("Your total score is \(score)")
         }
+            
 
     }
     
