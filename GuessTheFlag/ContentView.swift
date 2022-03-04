@@ -44,6 +44,7 @@ struct ContentView: View {
     
     @State private var rotationAmount = [0.0, 0.0, 0.0]
     @State private var opacityAmount = [1.0, 1.0, 1.0]
+    @State private var scaleAmount = [1.0, 1.0, 1.0]
 
     
     var body: some View {
@@ -67,12 +68,14 @@ struct ContentView: View {
                             Button {
                                 flagTapped(number)
                                 rotationAmount[number] += 360
-                                for (index, _) in opacityAmount.enumerated() where index != number {
+                                for index in 0..<3 where index != number {
                                     opacityAmount[index] -= 0.5
+                                    scaleAmount[index] -= 1.0
                                 }
                             } label: {
                                 FlagImage(image: Image(countries[number]))
                             }
+                            .scaleEffect(scaleAmount[number])
                             .opacity(opacityAmount[number])
                             .animation(.default, value: opacityAmount[number])
                             .rotation3DEffect(.degrees(rotationAmount[number]), axis: (x: 0.0, y: 1.0, z: 0.0))
@@ -136,6 +139,7 @@ struct ContentView: View {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
         opacityAmount = [1.0, 1.0, 1.0]
+        scaleAmount = [1, 1, 1]
     }
     
     func restartGame() {
