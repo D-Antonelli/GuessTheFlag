@@ -42,7 +42,8 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     
-    @State private var rotationAmount = 0.0
+    @State private var rotationAmount = [0.0, 0.0, 0.0]
+
     
     var body: some View {
         
@@ -61,15 +62,14 @@ struct ContentView: View {
                         Text(countries[correctAnswer])
                             .titleStyle()
                         }
-                        ForEach(0..<3) { number in
+                    ForEach(0..<3) { number in
                             Button {
-                                rotationAmount += 360
                                 flagTapped(number)
+                                rotationAmount[number] += 360
                             } label: {
                                 FlagImage(image: Image(countries[number]))
-                            }
-                            .rotation3DEffect(.degrees(rotationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
-                            .animation(.default, value: rotationAmount)
+                            }.rotation3DEffect(.degrees(rotationAmount[number]), axis: (x: 0.0, y: 1.0, z: 0.0))
+                            .animation(.default, value: rotationAmount[number])
                         }
                     
                 }
