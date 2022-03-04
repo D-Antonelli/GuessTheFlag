@@ -75,9 +75,10 @@ struct ContentView: View {
                             } label: {
                                 FlagImage(image: Image(countries[number]))
                             }
-                            .scaleEffect(scaleAmount[number])
                             .opacity(opacityAmount[number])
                             .animation(.default, value: opacityAmount[number])
+                            .scaleEffect(scaleAmount[number])
+                            .animation(.default.delay(0.5), value: scaleAmount[number])
                             .rotation3DEffect(.degrees(rotationAmount[number]), axis: (x: 0.0, y: 1.0, z: 0.0))
                             .animation(.default, value: rotationAmount[number])
                         }
