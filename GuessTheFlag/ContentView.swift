@@ -42,9 +42,9 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     
+//    animations
     @State private var rotationAmount = [0.0, 0.0, 0.0]
     @State private var opacityAmount = [1.0, 1.0, 1.0]
-    @State private var scaleAmount = [1.0, 1.0, 1.0]
     @State private var scale = 1.0
 
     
@@ -72,7 +72,6 @@ struct ContentView: View {
                                 scale -= 1.0
                                 for index in 0..<3 where index != number {
                                     opacityAmount[index] -= 0.5
-//                                    scaleAmount[index] -= 1.0
                                 }
                             } label: {
                                 FlagImage(image: Image(countries[number]))
