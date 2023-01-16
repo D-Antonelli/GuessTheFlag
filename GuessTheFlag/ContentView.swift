@@ -29,7 +29,7 @@ struct FlagImage: View {
             .renderingMode(.original)
             .clipShape(Capsule())
             .shadow(radius: 5)
-            .accessibilityLabel(label, default: "Unknown flag")
+            .accessibilityLabel(label)
     }
 }
 
@@ -92,7 +92,7 @@ struct ContentView: View {
                                 opacityAmount[index] -= 0.5
                             }
                         } label: {
-                            FlagImage(image: Image(countries[number]), label: labels[countries[number]])
+                            FlagImage(image: Image(countries[number]), label: labels[countries[number], default: "Unknown flag"])
                                 
                         }
                         .opacity(opacityAmount[number])
